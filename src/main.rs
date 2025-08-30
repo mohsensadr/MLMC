@@ -1,3 +1,6 @@
+#![allow(non_snake_case)] // Suppress all non_snake_case warnings crate-wide
+#![allow(unused_variables)] // Suppress all warnings on unused variables
+
 use ndarray::Array1;
 use ndarray_rand::rand_distr::{Normal, Distribution};
 use ndarray_rand::rand::thread_rng;
@@ -243,8 +246,6 @@ fn mlmc(
 use std::fs::File;
 use std::io::{Write, BufWriter};
 
-
-
 fn main() -> std::io::Result<()>  {    
     let file = File::create("mlmc_vs_mc.csv")?;
     let file2 = File::create("mlmc_details.csv")?;
@@ -263,13 +264,13 @@ fn main() -> std::io::Result<()>  {
         x0: 1.2,
     };
 
-    let eps_list = vec![1e-2, 1e-3];
+    let eps_list = vec![1e-2, 1e-3, 1e-4];
     let mut levels = vec![0_usize; eps_list.len()];
     let mut costs = vec![0.0; eps_list.len()];
     let mut costs_sd = vec![0.0; eps_list.len()];
 
     for (i, &eps) in eps_list.iter().enumerate() {
-        print!("Running MLMC for eps = {}\n", eps);
+        println!("-----------------\n\nRunning MLMC for eps = {}\n", eps);
 
         let (P, Nl, Cl, Vl, alpha, beta, gamma) = mlmc(Lmin, Lmax, N0, eps, &sde_params);
         let L = Nl.len();
@@ -277,7 +278,7 @@ fn main() -> std::io::Result<()>  {
         costs[i] = (0..L).map(|l| Nl[l] as f64 * Cl[l]).sum();
 
         println!("P: {:?}", P);
-        println!("P: {:#?}", Nl);
+        println!("Nl: {:#?}", Nl);
         println!("alpha: {:?}", alpha);
         println!("beta: {:?}", beta);
         println!("gamma: {:?}", gamma);
@@ -291,7 +292,7 @@ fn main() -> std::io::Result<()>  {
 
         // write row into CSV
         writeln!(writer, "{},{},{},{}", eps, levels[i], costs[i], costs_sd[i])?;
-        writeln!(writer2, "{},{},{},{},{},{},{}", P, eps, alpha, beta, gamma, L, Nl.iter().map(|x| x.to_string()).collect::<Vec<_>>().join(","))?;
+        writeln!(writer2, "{},{},{},{},{},{},{}", P, eps, alpha, beta, gamma, L, Nl.iter().map(|x| x.to_string()).collect::<Vec<_>>().join(" "))?;
     }
 
     Ok(())

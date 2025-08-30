@@ -1,7 +1,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 # MLMC Implementation in Rust
-This repository contains a **Rust implementation of the Multilevel Monte Carlo (MLMC) method** for solving stochastic differential equations (SDEs). It supports adaptive level selection, variance estimation, and linear regression to determine MLMC parameters.
+This repository contains a **Rust implementation of the Multilevel Monte Carlo (MLMC) method** for solving stochastic differential equations (SDEs). It supports optimal and adaptive level selection and variance estimation via linear regression to determine MLMC parameters. For details of MLMC method, see [M. Giles paper](https://doi.org/10.1017/S096249291500001X).
 
 ![Demo](example/mlmc_vs_mc_cost.png)
 ![Demo](example/mlmc_Nl_eps.png)

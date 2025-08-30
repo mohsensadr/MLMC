@@ -15,11 +15,22 @@ This repository contains a **Rust implementation of the Multilevel Monte Carlo (
 
 ## Usage
 
-1. Clone the repository:
+Clone the repository:
 
 ```bash
 git clone <repo_url>
 cd <repo_dir>
+```
+
+Then, simply run
+
+```bash
 cargo run
 ```
 
+You can modify the underlying SDE by changing the function
+```
+fn sde(l: usize, n: usize, sde_params: &SDEparams) -> [f64; 7] 
+```
+
+For plotting the output, use the jupyter notebook in ```example/``` directory as a example.

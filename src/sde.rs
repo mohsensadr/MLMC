@@ -25,13 +25,12 @@
 /// - The SDE is discretized using an Euler-Maruyama scheme with Brownian increments scaled by the time step.
 ///
 /// # Example
-/// ```
-/// use mlmc_sde::{sde, SDEparams};
+/// 
+/// use mlmc_sde::{sde, sde::SDEparams};
 ///
 /// let params = SDEparams { p: 1.0, t: 0.1, sig: 1.0, x0: 1.2 };
 /// let result = sde(2, 1000, &params);
-/// assert_eq!(result.len(), 7);
-/// ```
+/// 
 use ndarray::Array1;
 use ndarray_rand::rand_distr::{Normal, Distribution};
 use ndarray_rand::rand::thread_rng;

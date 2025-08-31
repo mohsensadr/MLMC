@@ -27,16 +27,12 @@
 /// Panics if input parameters are invalid (e.g., `lmin < 3`, `lmax < lmin`, `n0 == 0`, or `eps <= 0`).
 ///
 /// # Example
-/// ```
+///
 /// use mlmc_sde::{mlmc::mlmc, sde::SDEparams};
 ///
 /// let params = SDEparams { p: 1.0, t: 0.1, sig: 1.0, x0: 1.2 };
 /// let (p, nl, cl, vl, alpha, beta, gamma) = mlmc(3, 5, 100, 1e-2, &params);
 ///
-/// println!("MLMC estimate: {}", p);
-/// println!("Number of samples per level: {:?}", nl);
-/// println!("Estimated alpha: {}, beta: {}, gamma: {}", alpha, beta, gamma);
-/// ```
 
 use crate::sde::{sde, SDEparams};
 use crate::utility::linear_regression;

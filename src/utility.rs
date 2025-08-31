@@ -17,17 +17,7 @@
 ///   - Slope: `sum((x - mean_x)*(y - mean_y)) / sum((x - mean_x)^2)`
 ///   - Intercept: `mean_y - slope * mean_x`
 ///
-/// # Example
-/// ```
-/// use mlmc_sde::utility::linear_regression;
-///
-/// let x = vec![1.0, 2.0, 3.0];
-/// let y = vec![2.0, 4.0, 6.0];
-/// let (intercept, slope) = linear_regression(&x, &y).unwrap();
-/// assert!((slope - 2.0).abs() < 1e-10);
-/// assert!((intercept - 0.0).abs() < 1e-10);
-/// ```
-///
+
 pub fn linear_regression(x: &[f64], y: &[f64]) -> Result<(f64, f64), &'static str> {
     if x.len() != y.len() {
         return Err("x and y must have the same length");

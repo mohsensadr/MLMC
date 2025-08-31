@@ -1,3 +1,37 @@
+/// Simulates a stochastic differential equation (SDE) using a multilevel discretization.
+///
+/// # Parameters
+/// - `l`: The level of discretization (l=1 is the coarsest). Higher levels refine the time step.
+/// - `n`: Number of Monte Carlo samples to simulate.
+/// - `sde_params`: Reference to `SDEparams` struct containing:
+///     - `p`: Power in the drift term `-x^p`.
+///     - `t`: Total time of simulation.
+///     - `sig`: Noise intensity (standard deviation) of the Brownian term.
+///     - `x0`: Initial condition of the SDE.
+///
+/// # Returns
+/// An array of 7 `f64` values summarizing the simulation:
+/// 1. `nf * n` — total number of fine steps multiplied by number of samples.
+/// 2. Sum of differences `dp` (difference between fine and coarse paths for l>1, or fine path for l=1).
+/// 3. Sum of squares of differences `dp^2`.
+/// 4. Sum of cubes of differences `dp^3`.
+/// 5. Sum of fourth powers of differences `dp^4`.
+/// 6. Sum of final fine path values `xf`.
+/// 7. Sum of squares of final fine path values `xf^2`.
+///
+/// # Behavior
+/// - For `l == 1`, only a single coarse path is simulated.
+/// - For `l > 1`, both fine and coarse paths are simulated to compute multilevel differences.
+/// - The SDE is discretized using an Euler-Maruyama scheme with Brownian increments scaled by the time step.
+///
+/// # Example
+/// ```
+/// use mlmc_sde::{sde, SDEparams};
+///
+/// let params = SDEparams { p: 1.0, t: 0.1, sig: 1.0, x0: 1.2 };
+/// let result = sde(2, 1000, &params);
+/// assert_eq!(result.len(), 7);
+/// ```
 use ndarray::Array1;
 use ndarray_rand::rand_distr::{Normal, Distribution};
 use ndarray_rand::rand::thread_rng;

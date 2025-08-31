@@ -1,5 +1,33 @@
-/// Fit a simple linear regression y = intercept + slope * x
-/// Returns (intercept, slope)
+/// Performs a simple linear regression to fit a line `y = intercept + slope * x`.
+///
+/// # Parameters
+/// - `x`: Slice of independent variable values.
+/// - `y`: Slice of dependent variable values. Must have the same length as `x`.
+///
+/// # Returns
+/// - `Ok((intercept, slope))` containing the estimated line parameters.
+/// - `Err(&'static str)` if the input is invalid:
+///     - `x` and `y` have different lengths.
+///     - Less than two points are provided.
+///     - All `x` values are identical (cannot fit a line).
+///
+/// # Behavior
+/// - If exactly two points are provided, computes slope and intercept directly.
+/// - If more than two points, uses ordinary least squares formulas:
+///   - Slope: `sum((x - mean_x)*(y - mean_y)) / sum((x - mean_x)^2)`
+///   - Intercept: `mean_y - slope * mean_x`
+///
+/// # Example
+/// ```
+/// use mlmc_sde::utility::linear_regression;
+///
+/// let x = vec![1.0, 2.0, 3.0];
+/// let y = vec![2.0, 4.0, 6.0];
+/// let (intercept, slope) = linear_regression(&x, &y).unwrap();
+/// assert!((slope - 2.0).abs() < 1e-10);
+/// assert!((intercept - 0.0).abs() < 1e-10);
+/// ```
+///
 pub fn linear_regression(x: &[f64], y: &[f64]) -> Result<(f64, f64), &'static str> {
     if x.len() != y.len() {
         return Err("x and y must have the same length");
